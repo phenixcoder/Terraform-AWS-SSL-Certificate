@@ -4,6 +4,12 @@ variable "hosting_zone_domain_name" {
   default     = ""
 }
 
+variable "hosting_zone_public" {
+  type        = bool
+  description = "Set true if hosted zone is private"
+  default     = false
+}
+
 variable "fqdn" {
   type        = string
   description = "Primary domain for certificate"
