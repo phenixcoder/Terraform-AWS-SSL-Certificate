@@ -6,8 +6,8 @@ variable "hosting_zone_domain_name" {
 
 variable "hosting_zone_public" {
   type        = bool
-  description = "Set true if hosted zone is private"
-  default     = false
+  description = "Default true. Set false if hosted zone is private"
+  default     = true
 }
 
 variable "fqdn" {
@@ -20,10 +20,6 @@ variable "additional_domains" {
   description = "Additional domains/sub-domains to be added to this certificate"
   default     = []
 
-}
-variable "environment" {
-  type        = string
-  description = "Certificate Environment Tag"
 }
 
 variable "tags" {

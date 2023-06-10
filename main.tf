@@ -1,6 +1,6 @@
 data "aws_route53_zone" "hosting_zone" {
-  name         = "${var.hosting_zone_domain_name == "" ? var.fqdn : var.hosting_zone_domain_name}"
-  private_zone = var.hosting_zone_public
+  name         = var.hosting_zone_domain_name == "" ? var.fqdn : var.hosting_zone_domain_name
+  private_zone = !var.hosting_zone_public
 }
 
 resource "aws_acm_certificate" "certificate" {
@@ -15,7 +15,6 @@ resource "aws_acm_certificate" "certificate" {
   tags = merge(
     {
       Name = var.fqdn
-      Environment : var.environment
     },
     var.tags,
   )
