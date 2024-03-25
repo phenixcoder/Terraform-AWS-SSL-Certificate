@@ -2,13 +2,9 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.2.0"
+      version = ">= 2.7.0"
     }
   }
-}
-data "aws_route53_zone" "hosting_zone" {
-  name         = var.hosting_zone_domain_name == "" ? var.fqdn : var.hosting_zone_domain_name
-  private_zone = !var.hosting_zone_public
 }
 
 resource "aws_acm_certificate" "certificate" {
@@ -23,6 +19,7 @@ resource "aws_acm_certificate" "certificate" {
   tags = merge(
     {
       Name = var.fqdn
+      Environment : var.environment
     },
     var.tags,
   )
@@ -39,7 +36,7 @@ resource "aws_route53_record" "validation" {
 
   name            = each.value.name
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.hosting_zone.zone_id
+  zone_id         = var.hosting_zone
   records         = [each.value.record]
   ttl             = 60
   allow_overwrite = true
